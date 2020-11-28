@@ -1,10 +1,11 @@
 import requests
 import pandas as pd
 import json
+import matplotlib.pyplot as plt
 
 
 def auth():
-    return "AAAAAAAAAAAAAAAAAAAAAClXKAEAAAAAy8LisO8SDlbC%2B9dTwn06D2spd2k%3DYOTZjkEancpjcbOO86z7JGLG21kLtYNIADUypT9A1V4OK7rPgC"
+    return "Bearer token goes here"
 
 
 def create_url(names):
@@ -42,5 +43,6 @@ for name in funhaus_list:
                            json_response.get("data")[0].get("public_metrics").get("tweet_count")])
 
 data = pd.DataFrame(formatted_list)
-data.columns = ["Name", "Followers", "Tweets"]
-data.to_csv("Funhaus Twitter Data.csv", index=False)
+plt.figure()
+# data.columns = ["Name", "Followers", "Tweets"]
+# data.to_csv("Funhaus Twitter Data.csv", index=False)
