@@ -1,11 +1,13 @@
 import requests
 import pandas as pd
+import os
 import json
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def auth():
-    return "Bearer token goes here"
+    return os.environ.get("bearer_token")
 
 
 def create_url(names):
@@ -41,8 +43,12 @@ for name in funhaus_list:
     formatted_list.append([json_response.get("data")[0].get("name"),
                            json_response.get("data")[0].get("public_metrics").get("followers_count"),
                            json_response.get("data")[0].get("public_metrics").get("tweet_count")])
-
-data = pd.DataFrame(formatted_list)
+formatted_list_as_array = np.array(formatted_list)
+# print(formatted_list_as_array)
+data = pd.DataFrame(formatted_list,index=formatted_list_as_array[:,0])
+data.columns = ["Name", "Number of Followers", "Number of Tweets"]
 plt.figure()
+data.plot(kind="bar", sort_columns=True)
+plt.show()
 # data.columns = ["Name", "Followers", "Tweets"]
 # data.to_csv("Funhaus Twitter Data.csv", index=False)
